@@ -8,8 +8,7 @@ export default class SearchResultsPage {
       .should('be.visible')
       .find('#flightCardInfo')
       .then((flightCards) => {
-        var flightCard = flightCards[Math.floor(Math.random() * flightCards.length)];
-        cy.wrap(flightCard).click();
+        this._selectRandomCard(flightCards);
       });
   }
 
@@ -21,9 +20,13 @@ export default class SearchResultsPage {
       .should('be.visible')
       .find('#flightCardInfo')
       .then((flightCards) => {
-        var flightCard = flightCards[Math.floor(Math.random() * flightCards.length)];
-        cy.wrap(flightCard).click();
+        this._selectRandomCard(flightCards);
       });
+  }
+
+  _selectRandomCard(flightCards) {
+    var flightCard = flightCards[Math.floor(Math.random() * flightCards.length)];
+    cy.wrap(flightCard).click();
   }
 
   selectARate(rateType) {

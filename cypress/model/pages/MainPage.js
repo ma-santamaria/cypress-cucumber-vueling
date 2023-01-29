@@ -14,19 +14,20 @@ export default class MainPage {
   }
 
   setDepartureDate(departureDate) {
-    var day = departureDate.day;
-    var month = departureDate.month - 1;
-    var year = departureDate.year;
-    var dateSelector = `td[data-month="${month}"][data-year="${year}"] a[aria-label^="${day},"]`
+    var dateSelector = this._buildDateSelector(departureDate);
     cy.get('#popupCalendarSelector').find(dateSelector).click();
   }
 
   setReturnDate(returnDate) {
-    var day = returnDate.day;
-    var month = returnDate.month - 1;
-    var year = returnDate.year;
-    var dateSelector = `td[data-month="${month}"][data-year="${year}"] a[aria-label^="${day},"]`
+    var dateSelector = this._buildDateSelector(returnDate);
     cy.get('#popupCalendarSelector').find(dateSelector).click();
+  }
+
+  _buildDateSelector(aDate) {
+    var day = aDate.day;
+    var month = aDate.month - 1;
+    var year = aDate.year;
+    return `td[data-month="${month}"][data-year="${year}"] a[aria-label^="${day},"]`
   }
 
   increaseAdults() {
