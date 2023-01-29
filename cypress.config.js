@@ -21,7 +21,7 @@ async function setupNodeEvents(on, config) {
 module.exports = defineConfig({
   screenshotsFolder: "report/screenshots",
   videosFolder: "report/videos",
-  video: false,
+  video: true,
   viewportWidth: 1500,
   viewportHeight: 950,
   watchForFileChanges: false,

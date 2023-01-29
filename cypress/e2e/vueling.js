@@ -1,4 +1,4 @@
-import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import { Given, When, Then, defineParameterType } from "@badeball/cypress-cucumber-preprocessor";
 import { DateTime } from "luxon";
 import MainPage from "../model/pages/MainPage";
 import PassengersInformationPage from "../model/pages/PassengersInformationPage";
@@ -7,6 +7,14 @@ import SearchResultsPage from "../model/pages/SearchResultsPage";
 const mainPage = new MainPage();
 const searchResultsPage = new SearchResultsPage();
 const passengersInformationPage = new PassengersInformationPage();
+
+defineParameterType({
+  name: 'rateType',
+  regexp: /Basic|Optima|Excelente/,
+  transformer(s) {
+    return s;
+  }
+});
 
 Given("the user is in Vueling home page", () => {
   // just a little trick to prevent new tabs when performing the search
@@ -19,19 +27,19 @@ Given("the user is in Vueling home page", () => {
   mainPage.acceptCookies();
 });
 
-Given("the user selects a round-trip ticket from Barcelona to Madrid", () => {
-  mainPage.selectOrigin('Barcelona');
-  mainPage.selectDestination('Madrid');
+Given("the user selects a round-trip ticket from {word} to {word}", (origin, destination) => {
+  mainPage.selectOrigin(origin);
+  mainPage.selectDestination(destination);
 });
 
-Given("with start date 4 days from today", () => {
+Given("with start date {int} days from today", (numDays) => {
   var today = DateTime.now();
-  this.departureDate = today.plus({days: 4});
+  this.departureDate = today.plus({days: numDays});
   mainPage.setDepartureDate(this.departureDate);
 });
 
-Given("with end date 3 days after the start date", () => {
-  var returnDate = this.departureDate.plus({days: 3});
+Given("with end date {int} days after the start date", (numDays) => {
+  var returnDate = this.departureDate.plus({days: numDays});
   mainPage.setReturnDate(returnDate);
 });
 
@@ -40,20 +48,17 @@ Given("for 2 adults and 1 child", () => {
   mainPage.increaseChildrens();
 });
 
+Given("the user selects the flights", () => {
+  searchResultsPage.selectAnOutboundFlight();
+  searchResultsPage.selectAReturnFlight();
+});
+
 Given("the user performs the search", () => {
   mainPage.doSearch();
 });
 
-Given("the user selects any outbound flight", () => {
-  searchResultsPage.selectAnOutboundFlight();
-});
-
-Given("the user selects any return flight", () => {
-  searchResultsPage.selectAReturnFlight();
-});
-
-When("the user accepts the travel with a Basic rate", () => {
-  searchResultsPage.selectARate('Basic');
+When("the user accepts the travel with a {rateType} rate", (rateType) => {
+  searchResultsPage.selectARate(rateType);
   searchResultsPage.continueProcess();
 });
 
