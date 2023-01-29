@@ -22,6 +22,9 @@ module.exports = defineConfig({
   screenshotsFolder: "report/screenshots",
   videosFolder: "report/videos",
   video: false,
+  viewportWidth: 1500,
+  viewportHeight: 950,
+  watchForFileChanges: false,
   e2e: {
     baseUrl: "https://www.vueling.com",
     specPattern: "**/*.feature",

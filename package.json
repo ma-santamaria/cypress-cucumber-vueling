@@ -4,7 +4,7 @@
   "description": "Automatización web venta bileltes",
   "main": "index.js",
   "scripts": {
-    "test": "npm run clean && cypress run --headed --browser chrome",
+    "test": "npm run clean && cypress run --headed --browser chrome --no-exit",
     "cypress": "cypress open",
     "clean": "rimraf report"
   },
@@ -16,6 +16,7 @@
     "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
     "@deepakvishwakarma/cucumber-json-formatter": "^0.0.3",
     "cypress": "^12.4.0",
+    "luxon": "^3.2.1",
     "rimraf": "^4.1.2"
   },
   "cypress-cucumber-preprocessor": {
