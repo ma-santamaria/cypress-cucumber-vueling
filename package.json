@@ -4,7 +4,7 @@
   "description": "Automatización web venta bileltes",
   "main": "index.js",
   "scripts": {
-    "test": "npm run clean && cypress run --headed --browser chrome --no-exit",
+    "test": "npm run clean && cypress run --headed --browser chrome",
     "cypress": "cypress open",
     "clean": "rimraf report"
   },

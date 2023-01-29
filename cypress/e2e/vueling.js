@@ -1,18 +1,25 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import MainPage from "../model/pages/MainPage";
 import { DateTime } from "luxon";
+import MainPage from "../model/pages/MainPage";
+import PassengersInformationPage from "../model/pages/PassengersInformationPage";
+import SearchResultsPage from "../model/pages/SearchResultsPage";
 
 const mainPage = new MainPage();
+const searchResultsPage = new SearchResultsPage();
+const passengersInformationPage = new PassengersInformationPage();
 
 Given("the user is in Vueling home page", () => {
-  cy.visit("/es");
-  cy.window().then((win) => {
-    cy.spy(win, 'open').as('redirect');
+  // just a little trick to prevent new tabs when performing the search
+  cy.on('window:before:load', (win) => {
+    cy.stub(win, 'open').callsFake(url => {
+      cy.visit(url);
+    });
   });
+  cy.visit('/es');
   mainPage.acceptCookies();
 });
 
-Given("the user search for a round-trip ticket from Barcelona to Madrid", () => {
+Given("the user selects a round-trip ticket from Barcelona to Madrid", () => {
   mainPage.selectOrigin('Barcelona');
   mainPage.selectDestination('Madrid');
 });
@@ -31,24 +38,25 @@ Given("with end date 3 days after the start date", () => {
 Given("for 2 adults and 1 child", () => {
   mainPage.increaseAdults();
   mainPage.increaseChildrens();
+});
+
+Given("the user performs the search", () => {
   mainPage.doSearch();
-  cy
-    .get('@redirect')
-    .should('be.called');
 });
 
-Given("the user selects a outbound flight with a Basic rate", () => {
-  // throw new Error('Not implemented yet');
+Given("the user selects any outbound flight", () => {
+  searchResultsPage.selectAnOutboundFlight();
 });
 
-Given("the user selects a return flight with a Optima rate", () => {
-  // throw new Error('Not implemented yet');
+Given("the user selects any return flight", () => {
+  searchResultsPage.selectAReturnFlight();
 });
 
-When("the user accepts the travel", () => {
-  // throw new Error('Not implemented yet');
+When("the user accepts the travel with a Basic rate", () => {
+  searchResultsPage.selectARate('Basic');
+  searchResultsPage.continueProcess();
 });
 
-Then("the order is confirmed", () => {
-  // throw news Error('Not implemented yet');
+Then("the passengers information page is displayed", () => {
+  passengersInformationPage.assertPageIsShown();
 });

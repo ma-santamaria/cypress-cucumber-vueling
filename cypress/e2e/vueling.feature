@@ -7,11 +7,12 @@ Feature: A fly can be selected by the user
     Describir el escenario
 
     Given the user is in Vueling home page
-    And the user search for a round-trip ticket from Barcelona to Madrid
+    And the user selects a round-trip ticket from Barcelona to Madrid
     * with start date 4 days from today
     * with end date 3 days after the start date
     * for 2 adults and 1 child
-    And the user selects a outbound flight with a Basic rate
-    And the user selects a return flight with a Optima rate
-    When the user accepts the travel
-    Then the order is confirmed
+    And the user performs the search
+    And the user selects any outbound flight
+    And the user selects any return flight
+    When the user accepts the travel with a Basic rate
+    Then the passengers information page is displayed
