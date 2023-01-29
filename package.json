@@ -4,14 +4,33 @@
   "description": "Automatización web venta bileltes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "cypress": "cypress open"
+    "test": "npm run clean && cypress run --headed --browser chrome",
+    "cypress": "cypress open",
+    "clean": "rimraf report"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^15.1.2",
-    "cypress": "^12.4.0"
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
+    "@deepakvishwakarma/cucumber-json-formatter": "^0.0.3",
+    "cypress": "^12.4.0",
+    "rimraf": "^4.1.2"
+  },
+  "cypress-cucumber-preprocessor": {
+    "messages": {
+      "enabled": true,
+      "output": "report/cucumber-messages.ndjson"
+    },
+    "json": {
+      "enabled": true,
+      "output": "report/cucumber-report.json",
+      "formatter": "./node_modules/@deepakvishwakarma/cucumber-json-formatter/lib/main.js"
+    },
+    "html": {
+      "enabled": true,
+      "output": "report/cucumber-report.html"
+    }
   }
 }
