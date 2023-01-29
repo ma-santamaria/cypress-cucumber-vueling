@@ -1,7 +1,7 @@
 {
   "name": "vueling",
   "version": "1.0.0",
-  "description": "Automatización web venta bileltes",
+  "description": "Automatización web venta billetes",
   "main": "index.js",
   "scripts": {
     "test": "npm run clean && cypress run --headed --browser chrome",
